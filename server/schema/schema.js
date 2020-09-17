@@ -1,9 +1,12 @@
 const graphql = require('graphql')
 const Word = require('../models/Word')
+const getWordDetail = require('../utils/helper')
 
 const {
+    GraphQLSchema,
     GraphQLObjectType,
     GraphQLList,
+    GraphQLNonNull,
     GraphQLString,
     GraphQLID,
 } = graphql
@@ -13,13 +16,17 @@ const WordType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         word: { type: GraphQLString },
-        pronounciationUrl: { type: GraphQLString },
-        origin: new GraphQLList(GraphQLString),
-        entries: new GraphQLList(new GraphQLObjectType({
-            partOfSpeech: { type: GraphQLString },
-            definition: { type: GraphQLString },
-            examples: new GraphQLList(GraphQLString)
-        }))
+        entries: {
+            type: new GraphQLList(new GraphQLObjectType({
+                name: 'Entry',
+                fields: () => ({
+                    partOfSpeech: { type: GraphQLString },
+                    origin: { type: new GraphQLList(GraphQLString) },
+                    definitions: { type: new GraphQLList(GraphQLString) },
+                    examples: { type: new GraphQLList(GraphQLString) }
+                })
+            }))
+        }
     })
 })
 
@@ -40,4 +47,26 @@ const RootQuery = new GraphQLObjectType({
             }
         }
     }
+})
+
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addWord: {
+            type: WordType,
+            args: {
+                word: { type: new GraphQLNonNull(GraphQLString) }
+            },
+            async resolve(parent, args) {
+                let wordDetail = await getWordDetail(args.word)
+                let word = new Word(wordDetail)
+                return word.save()
+            }
+        }
+    }
+})
+
+module.exports = new GraphQLSchema({
+    query: RootQuery,
+    mutation: Mutation
 })

@@ -2,11 +2,10 @@ const mongoose = require('mongoose')
 
 const wordShema = new mongoose.Schema({
     word: { type: String, unique: true },
-    pronounciationUrl: { type: String },
-    origin: [{ type: String }],
     entries: [{
         partOfSpeech: { type: String },
-        definition: { type: String },
+        origin: [{ type: String }],
+        definitions: [{ type: String }],
         examples: [{ type: String }]
     }]
 })
