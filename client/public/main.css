@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Kumbh Sans', sans-serif;
 }
 
 body {
@@ -13,7 +14,7 @@ body {
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 0 10px 0 20px;
     color: white;
     height: 7vh;
 }
@@ -27,17 +28,22 @@ a {
     margin-top: 5px !important;
 }
 
-.words {
+.container {
     width: 100%;
     height: 93vh;
     padding-top: 10px;
     background-color: white;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
-    overflow-y: scroll;
 }
 
-.words .heading {
+.container .heading {
     padding: 0 20px;
     font-weight: normal;
+    height: 4vh;
+}
+
+.word-container {
+    height: 90vh;
+    overflow-y: scroll;
 }
