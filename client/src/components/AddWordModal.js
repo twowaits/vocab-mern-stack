@@ -6,26 +6,35 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { handleAddWord } from '../actions/word'
 
 class AddWordModal extends Component {
     state = {
-        input: ''
+        input: '',
+        isDuplicate: false,
+        loading: false
     }
 
     setInput(input) {
         this.setState({ input })
+        const isDuplicate = this.props.words.some(word => word.word === input)
+        if (isDuplicate) this.setState({ isDuplicate })
+        else this.setState({ isDuplicate })
     }
 
     handleAddBtn(e) {
-        e.preventDefault()
         if (this.state.input !== '') {
+            this.setState({ loading: true })
             this.props.handleAddWord(this.state.input)
                 .then(res => {
-                    if (!res) alert('Not Added')
-                    else alert('Added')
+                    if (!res) alert('Word Was Not Added')
+                    else alert('New Word Added')
+                    this.props.handleClose()
                 })
+                .catch(() => alert('Word Was Not Added'))
         }
+        this.setState({ loading: false })
     }
 
     render() {
@@ -40,7 +49,7 @@ class AddWordModal extends Component {
                         id="word"
                         label="New Word"
                         type="Text"
-                        onChange={e => this.setInput(e.target.value)}
+                        onKeyUp={e => this.setInput(e.target.value)}
                         fullWidth
                     />
                 </DialogContent>
@@ -48,11 +57,13 @@ class AddWordModal extends Component {
                     <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={(e) => this.handleAddBtn(e)} color="primary">
-                        Add
-                    </Button>
+                    {this.state.loading ?
+                        (<Button><CircularProgress color="secondary" /></Button>) :
+                        (<Button disabled={this.state.isDuplicate} onClick={(e) => this.handleAddBtn(e)} color="primary">
+                            Add
+                        </Button>)}
                 </DialogActions>
-            </Dialog>
+            </Dialog >
         )
     }
 }

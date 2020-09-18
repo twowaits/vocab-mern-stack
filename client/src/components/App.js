@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Header from './Header'
 import Words from './Words'
+import Search from './Search'
 import { handleInitialData } from '../actions/word'
 
 const theme = createMuiTheme({
@@ -21,8 +22,15 @@ class App extends Component {
     return (
       <ThemeProvider theme={theme}>
         <BrowserRouter>
-          <Header />
-          <Words text="Words List" />
+          <Switch>
+            <Route exact path='/'>
+              <Header />
+              <Words text="Words List" />
+            </Route>
+            <Route path='/search'>
+              <Search />
+            </Route>
+          </Switch>
         </BrowserRouter>
       </ThemeProvider>
     )
