@@ -20,7 +20,7 @@ export const addWord = (word) => {
 export const handleAddWord = (word) => {
     return dispatch => {
         return addNewWord(word)
-            .then(word => dispatch(addNewWord(word)))
+            .then(word => dispatch(addWord(word)))
     }
 }
 

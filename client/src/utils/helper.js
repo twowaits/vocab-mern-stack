@@ -15,10 +15,10 @@ export const getAllWords = async () => {
                 words{
                     word
                     entries{
-                    partOfSpeech
-                    origin
-                    definitions
-                    examples
+                        partOfSpeech
+                        origin
+                        definitions
+                        examples
                     }
                 }
             }`
@@ -28,19 +28,21 @@ export const getAllWords = async () => {
 
 export const addNewWord = async (word) => {
     const result = await client
-        .query({
-            query: gql`
+        .mutate({
+            mutation: gql`
             mutation{
                 addWord(word:"${word}"){
                     word
                     entries{
-                    partOfSpeech
-                    origin
-                    definitions
-                    examples
+                        partOfSpeech
+                        origin
+                        definitions
+                        examples
                     }
                 }
             }`
         })
-    return result.data
+    if (result.data.addWord.word === null) return false
+    console.log(result.data.addWord);
+    return result.data.addWord
 }
