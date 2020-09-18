@@ -1,9 +1,16 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Header from './Header'
 import Words from './Words'
 import { handleInitialData } from '../actions/word'
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: "'Kumbh Sans', sans-serif",
+  }
+})
 
 class App extends Component {
   componentDidMount() {
@@ -12,12 +19,12 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
-        <Fragment>
+      <ThemeProvider theme={theme}>
+        <BrowserRouter>
           <Header />
           <Words text="Words List" />
-        </Fragment>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
     )
   }
 }

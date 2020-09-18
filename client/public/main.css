@@ -11,6 +11,11 @@ body {
     background-color: rgb(85, 0, 85);
 }
 
+#root {
+    height: 100vh;
+    overflow: hidden;
+}
+
 .header {
     display: flex;
     justify-content: space-between;
@@ -46,4 +51,10 @@ a {
 .word-container {
     height: 90vh;
     overflow-y: scroll;
+}
+
+.closeBar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px;
 }

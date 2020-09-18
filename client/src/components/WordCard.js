@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography'
 export default function MediaCard(props) {
     return (
         <Card>
-            <CardActionArea>
+            <CardActionArea onClick={props.handleClick}>
                 <CardContent>
                     <Typography gutterBottom variant="h5" component="h2">
                         {props.word.word}
