@@ -5,6 +5,7 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import Header from './Header'
 import Words from './Words'
 import Search from './Search'
+import { SnackbarProvider } from 'notistack'
 import { handleInitialData } from '../actions/word'
 
 const theme = createMuiTheme({
@@ -21,17 +22,24 @@ class App extends Component {
   render() {
     return (
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Switch>
-            <Route exact path='/'>
-              <Header />
-              <Words text="Words List" />
-            </Route>
-            <Route path='/search'>
-              <Search />
-            </Route>
-          </Switch>
-        </BrowserRouter>
+        <SnackbarProvider
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+        >
+          <BrowserRouter>
+            <Switch>
+              <Route exact path='/'>
+                <Header />
+                <Words text="Words List" />
+              </Route>
+              <Route path='/search'>
+                <Search />
+              </Route>
+            </Switch>
+          </BrowserRouter>
+        </SnackbarProvider>
       </ThemeProvider>
     )
   }

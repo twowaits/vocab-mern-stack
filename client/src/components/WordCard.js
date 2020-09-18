@@ -13,7 +13,7 @@ export default function MediaCard(props) {
                         {props.word.word}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="div">
-                        {props.word.entries.map((entry, index) => (
+                        {props.word.entries && props.word.entries.map((entry, index) => (
                             <p style={{ marginTop: 10 }} key={index}>({entry.partOfSpeech}) {entry.definitions[0]}</p>
                         ))}
                     </Typography>

@@ -7,6 +7,7 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { withSnackbar } from 'notistack'
 import { handleAddWord } from '../actions/word'
 
 class AddWordModal extends Component {
@@ -28,13 +29,13 @@ class AddWordModal extends Component {
             this.setState({ loading: true })
             this.props.handleAddWord(this.state.input)
                 .then(res => {
-                    if (!res) alert('Word Was Not Added')
-                    else alert('New Word Added')
+                    if (!res.word) this.props.enqueueSnackbar("Unable to add new word")
+                    else this.props.enqueueSnackbar("New word is added to dictionary")
                     this.props.handleClose()
+                    this.setState({ loading: false })
                 })
-                .catch(() => alert('Word Was Not Added'))
+                .catch(() => this.props.enqueueSnackbar("Unable to add new word"))
         }
-        this.setState({ loading: false })
     }
 
     render() {
@@ -74,4 +75,4 @@ const mapStateToProps = (words) => {
     }
 }
 
-export default connect(mapStateToProps, { handleAddWord })(AddWordModal)
+export default connect(mapStateToProps, { handleAddWord })(withSnackbar(AddWordModal))
