@@ -1,10 +1,14 @@
 const express = require('express')
+const cors = require('cors')
 const { graphqlHTTP } = require('express-graphql')
 const mongoose = require('mongoose')
 const schema = require('./schema/schema')
 require('dotenv').config()
 
 const app = express()
+
+//allow cross sharing of resources
+app.use(cors())
 
 //connect to mongodb
 mongoose.connect(process.env.mongodbUri, { useNewUrlParser: true, useUnifiedTopology: true })

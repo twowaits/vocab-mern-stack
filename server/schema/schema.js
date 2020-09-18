@@ -59,6 +59,7 @@ const Mutation = new GraphQLObjectType({
             },
             async resolve(parent, args) {
                 let wordDetail = await getWordDetail(args.word)
+                if (!wordDetail) return false
                 let word = new Word(wordDetail)
                 return word.save()
             }

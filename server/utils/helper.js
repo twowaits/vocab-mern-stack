@@ -38,7 +38,7 @@ const getWordDetail = async (word) => {
         //return word object
         return wordObj
     } catch (e) {
-        console.log(e)
+        return false
     }
 }
 
