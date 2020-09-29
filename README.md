@@ -1,5 +1,5 @@
 ## Vocab App
-Vocab App is a mern stack app to improve the vocabulary.
+Vocab App is a mern stack web app to improve the vocabulary.
 
 ## Setup
 
